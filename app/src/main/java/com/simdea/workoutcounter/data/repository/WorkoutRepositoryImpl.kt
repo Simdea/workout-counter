@@ -55,4 +55,16 @@ class WorkoutRepositoryImpl @Inject constructor(
     override suspend fun updateWorkout(workout: WorkoutEntity) {
         workoutDao.updateWorkout(workout)
     }
+
+    override suspend fun deleteAllWorkouts() {
+        workoutDao.deleteAllWorkouts()
+    }
+
+    override suspend fun insertAllWorkouts(workouts: List<WorkoutEntity>) {
+        workoutDao.insertAll(workouts)
+    }
+
+    override suspend fun replaceWorkouts(workouts: List<WorkoutEntity>) {
+        workoutDao.replaceWorkouts(workouts)
+    }
 }

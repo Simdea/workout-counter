@@ -11,4 +11,7 @@ interface WorkoutRepository {
     suspend fun logWorkout(date: OffsetDateTime = OffsetDateTime.now())
     suspend fun deleteWorkout(workout: WorkoutEntity)
     suspend fun updateWorkout(workout: WorkoutEntity)
+    suspend fun deleteAllWorkouts()
+    suspend fun insertAllWorkouts(workouts: List<WorkoutEntity>)
+    suspend fun replaceWorkouts(workouts: List<WorkoutEntity>)
 }
