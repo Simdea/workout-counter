@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Centered dumbbell icon representing workouts -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,44 L35,64 C35,66.2 33.2,68 31,68 L27,68 C24.8,68 23,66.2 23,64 L23,44 C23,41.8 24.8,40 27,40 L31,40 C33.2,40 35,41.8 35,44 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M85,44 L85,64 C85,66.2 83.2,68 81,68 L77,68 C74.8,68 73,66.2 73,64 L73,44 C73,41.8 74.8,40 77,40 L81,40 C83.2,40 85,41.8 85,44 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,50 L73,50 L73,58 L35,58 Z" />
+    <!-- Tally marks or counter representation at the bottom -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,75 L42,75 L42,85 L40,85 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48,75 L50,75 L50,85 L48,85 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M56,75 L58,75 L58,85 L56,85 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M64,75 L66,75 L66,85 L64,85 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,82 L68,78 L68,80 L38,84 Z" />
+</vector>
