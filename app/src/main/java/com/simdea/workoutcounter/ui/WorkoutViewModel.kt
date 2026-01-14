@@ -23,10 +23,15 @@ class WorkoutViewModel @Inject constructor(
             initialValue = WorkoutUiState.Loading
         )
 
-    fun logWorkout() {
+    fun logWorkout(date: java.time.LocalDate? = null) {
         viewModelScope.launch {
             try {
-                repository.logWorkout(OffsetDateTime.now())
+                val dateTime = if (date != null) {
+                    date.atTime(java.time.LocalTime.now()).atZone(java.time.ZoneId.systemDefault()).toOffsetDateTime()
+                } else {
+                    OffsetDateTime.now()
+                }
+                repository.logWorkout(dateTime)
             } catch (e: Exception) {
                 // Error handling could be implemented via a separate SharedFlow for one-time events
             }

@@ -5,33 +5,61 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.simdea.workoutcounter.R
 import com.simdea.workoutcounter.domain.model.WorkoutStats
 import com.simdea.workoutcounter.ui.theme.WorkoutCounterTheme
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     viewModel: WorkoutViewModel,
+    onNavigateToHistory: () -> Unit,
+    onNavigateToSettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var showLogWorkoutDialog by remember { mutableStateOf(false) }
+
+    if (showLogWorkoutDialog) {
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = System.currentTimeMillis()
+        )
+        DatePickerDialog(
+            onDismissRequest = { showLogWorkoutDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    val selectedDate = datePickerState.selectedDateMillis?.let { millis ->
+                         LocalDate.ofEpochDay(millis / (24 * 60 * 60 * 1000))
+                    } ?: LocalDate.now()
+                    viewModel.logWorkout(selectedDate)
+                    showLogWorkoutDialog = false
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showLogWorkoutDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -41,12 +69,20 @@ fun DashboardScreen(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                ),
+                actions = {
+                    IconButton(onClick = onNavigateToHistory) {
+                        Icon(Icons.Filled.History, contentDescription = "History")
+                    }
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
+                    }
+                }
             )
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { viewModel.logWorkout() },
+                onClick = { showLogWorkoutDialog = true },
                 icon = { Icon(Icons.Filled.Add, contentDescription = null) },
                 text = { Text("Log Workout") },
                 containerColor = MaterialTheme.colorScheme.primary,
