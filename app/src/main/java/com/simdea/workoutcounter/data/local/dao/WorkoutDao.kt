@@ -12,6 +12,12 @@ interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWorkout(workout: WorkoutEntity)
 
+    @androidx.room.Delete
+    suspend fun deleteWorkout(workout: WorkoutEntity)
+
+    @androidx.room.Update
+    suspend fun updateWorkout(workout: WorkoutEntity)
+
     @Query("SELECT * FROM workouts ORDER BY date DESC")
     fun getAllWorkouts(): Flow<List<WorkoutEntity>>
 

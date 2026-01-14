@@ -5,6 +5,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Info
@@ -16,12 +18,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.simdea.workoutcounter.R
 import com.simdea.workoutcounter.domain.model.WorkoutStats
 import com.simdea.workoutcounter.ui.theme.WorkoutCounterTheme
 
@@ -29,6 +28,8 @@ import com.simdea.workoutcounter.ui.theme.WorkoutCounterTheme
 @Composable
 fun DashboardScreen(
     viewModel: WorkoutViewModel,
+    onNavigateToHistory: () -> Unit,
+    onNavigateToSettings: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -41,7 +42,15 @@ fun DashboardScreen(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                ),
+                actions = {
+                    IconButton(onClick = onNavigateToHistory) {
+                        Icon(Icons.Filled.History, contentDescription = "History")
+                    }
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(Icons.Filled.Settings, contentDescription = "Settings")
+                    }
+                }
             )
         },
         floatingActionButton = {
